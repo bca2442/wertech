@@ -3289,7 +3289,7 @@ if (fs.existsSync(FRONTEND_INDEX_FILE)) {
     return res.sendFile(FRONTEND_INDEX_FILE);
   });
 } else if (FRONTEND_URL) {
-  app.get('/', (req, res) => {
+  app.get(/^\/(?!api(?:\/|$)).*/, (req, res) => {
     return res.redirect(302, FRONTEND_URL);
   });
 }
