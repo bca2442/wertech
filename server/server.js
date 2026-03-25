@@ -16,6 +16,7 @@ const REFRESH_TOKEN_TTL_SECONDS = 7 * 24 * 60 * 60;
 const JWT_SECRET = process.env.JWT_SECRET || 'wertech_dev_secret_change_me';
 const PORT = Number(process.env.PORT || 5000);
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/wertech_db';
+const FRONTEND_URL = String(process.env.FRONTEND_URL || '').trim();
 const INSTALL_BONUS_WTK = 500;
 const PROFILE_COMPLETION_BONUS_WTK = 500;
 const REFERRAL_INSTALL_REWARD_WTK = 100;
@@ -3286,6 +3287,10 @@ if (fs.existsSync(FRONTEND_INDEX_FILE)) {
 
   app.get(/^\/(?!api(?:\/|$)).*/, (req, res) => {
     return res.sendFile(FRONTEND_INDEX_FILE);
+  });
+} else if (FRONTEND_URL) {
+  app.get('/', (req, res) => {
+    return res.redirect(302, FRONTEND_URL);
   });
 }
 
